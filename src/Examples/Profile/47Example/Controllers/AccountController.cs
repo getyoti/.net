@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Web.Mvc;
 using _47Example.Models;
@@ -45,7 +46,7 @@ namespace _47Example.Controllers
 
                 ViewBag.RememberMeID = activityDetails.RememberMeId;
 
-                DisplayAttributes displayAttributes = CreateDisplayAttributes(profile.Attributes);
+                DisplayAttributes displayAttributes = CreateDisplayAttributes(profile.AttributeCollection);
 
                 if (profile.FullName != null)
                 {
@@ -70,11 +71,11 @@ namespace _47Example.Controllers
             }
         }
 
-        private static DisplayAttributes CreateDisplayAttributes(Dictionary<string, BaseAttribute> attributes)
+        private static DisplayAttributes CreateDisplayAttributes(ReadOnlyCollection<BaseAttribute> attributes)
         {
             var displayAttributes = new DisplayAttributes();
 
-            foreach (var yotiAttribute in attributes.Values)
+            foreach (var yotiAttribute in attributes)
             {
                 switch (yotiAttribute.GetName())
                 {
